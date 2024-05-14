@@ -13,7 +13,7 @@ app.use(ssrHandler);
 app.use(
     '/api',
     createProxyMiddleware({
-        target: process.env.PROXY || 'http://localhost:8080/api',
+        target: process.env.PROXY_URL || 'http://localhost:8080/api',
         changeOrigin: true,
     }),
 );
