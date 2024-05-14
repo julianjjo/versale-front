@@ -4,8 +4,7 @@ import ProductView from "../../components/ProductView.jsx";
 ---
 
 <div>
-    <p>Producto {productId}</p>
-    <ProductView productId={productId} />
+    <ProductView client:load productId={productId} />
 </div>
 
 <style></style>
