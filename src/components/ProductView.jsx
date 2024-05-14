@@ -17,6 +17,7 @@ const ProductView = ({ productId }) => {
                 setData(json.data);
             })
             .catch(error => {
+                console.error(error);
                 setError(error.message);
             });
     }, [productId]);

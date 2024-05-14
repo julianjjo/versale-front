@@ -16,6 +16,7 @@ function MostSelling() {
                 setData(json.data);
             })
             .catch(error => {
+                console.error(error);
                 setError(error.message);
             });
     }, []);
