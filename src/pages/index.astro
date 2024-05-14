@@ -1,13 +1,21 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import MostSelling from "../components/MostSelling.jsx";
 ---
 
 <Layout title="Bienvenido a Versale">
-	<div class="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
-		<h2 class="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">Bienvenido a Versale</h2>
-		<p class="mt-1 text-gray-600 dark:text-neutral-400">El mejor sitio para vender lo que no necesitas sin preocuparte por nada.</p>
-	  </div>
+    <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
+        <h2
+            class="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white"
+        >
+            Bienvenido a Versale
+        </h2>
+        <p class="mt-1 text-gray-600 dark:text-neutral-400">
+            El mejor sitio para vender lo que no necesitas sin preocuparte por
+            nada.
+        </p>
+    </div>
+    <MostSelling client:load />
 </Layout>
 
-<style>
-</style>
+<style></style>
