@@ -1,0 +1,10 @@
+---
+const { productId } = Astro.params;
+import ProductView from "../../components/ProductView.jsx";
+---
+
+<div>
+    <ProductView client:load productId={productId} />
+</div>
+
+<style></style>
