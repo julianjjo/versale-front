@@ -15,7 +15,7 @@ jobs:
             - name: Checkout the repo # (callout-1)
               uses: actions/checkout@v2
             - name: Build image # (callout-2)
-              run: docker build -t versale-back .
+              run: docker build -t versale-front .
             - name: Install doctl # (callout-3)
               uses: digitalocean/action-doctl@v2
               with:
