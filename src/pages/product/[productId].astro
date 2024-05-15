@@ -1,10 +1,10 @@
 ---
 const { productId } = Astro.params;
 import ProductView from "../../components/ProductView.jsx";
+import Layout from "../../layouts/Layout.astro";
 ---
-
+<Layout title="Bienvenido a Versale">
 <div>
     <ProductView client:load productId={productId} />
 </div>
-
-<style></style>
+</Layout>
