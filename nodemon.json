@@ -1,0 +1,10 @@
+{
+    "watch": [
+        "src"
+    ],
+    "ext": "astro,jsx",
+    "ignore": [
+        "src/**/*.test.js"
+    ],
+    "exec": "bun run build && bun start"
+}
