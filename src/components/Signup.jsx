@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Form, Field } from 'react-final-form';
 
 const SignupForm = ({ path }) => {
+    console.log("path:", path);
     const onSubmit = (formData) => {
+        console.log("onSubmit llamado con datos:", formData);
         axios.post(`/api/v1${path}`, formData)
             .then(res => {
                 console.log(res.data);
@@ -43,7 +45,7 @@ const SignupForm = ({ path }) => {
         <Form
             onSubmit={onSubmit}
             validate={validate}
-            render={({ handleSubmit }) => (
+            render={({ handleSubmit, submitting }) => (
                 <form className="max-w-screen-lg mx-auto mt-12" onSubmit={handleSubmit}>
                     <div className="relative z-0 w-full mb-5 group">
                         <Field name="first_name">
@@ -195,6 +197,7 @@ const SignupForm = ({ path }) => {
                     <button
                         type="submit"
                         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-4"
+                        disabled={submitting}
                     >Submit</button>
                 </form>
             )}

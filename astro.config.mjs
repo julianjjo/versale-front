@@ -9,6 +9,18 @@ import node from "@astrojs/node";
 export default defineConfig({
   integrations: [react(), tailwind()],
   output: "server",
+  vite: {
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8080', // URL de tu servidor API
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/api/, '/api'),
+        },
+      },
+    },
+  },
   adapter: node({
     mode: "middleware"
   })
