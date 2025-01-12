@@ -158,11 +158,12 @@ const { path } = Astro.props;
         e.preventDefault(); // Previene el envío predeterminado
 
         // Limpiar mensajes anteriores
-        successMessage.classList.add('hidden');
-        serverErrorMessage.classList.add('hidden');
+        if (successMessage) successMessage.classList.add('hidden');
+        if (serverErrorMessage) serverErrorMessage.classList.add('hidden');
 
         // Recolectar los datos del formulario
-        const formData = new FormData(form);
+        const formElement = document.getElementById('signup-form') as HTMLFormElement;
+        const formData = new FormData(formElement);
         const data = Object.fromEntries(formData.entries());
 
         // Validación manual de campos
@@ -174,43 +175,56 @@ const { path } = Astro.props;
         requiredFields.forEach((field) => {
           const input = document.getElementById(field);
           const errorSpan = document.getElementById(`${field}_error`);
-          if (!data[field] || data[field].trim() === '') {
-            errorSpan.classList.remove('hidden');
-            hasError = true;
-          } else {
-            errorSpan.classList.add('hidden');
+          const fieldValue = data[field] instanceof File ? '' : (data[field] as string).trim();
+          if (errorSpan) {
+            if (!fieldValue) {
+              errorSpan.classList.remove('hidden');
+              hasError = true;
+            } else {
+              errorSpan.classList.add('hidden');
+            }
           }
-        });
-
-        // Validación adicional para el email
-        if (data.email && !/\S+@\S+\.\S+/.test(data.email)) {
-          const emailError = document.getElementById('email_error');
-          emailError.textContent = 'Email inválido';
-          emailError.classList.remove('hidden');
-          hasError = true;
-        }
+          
+          // Validación adicional para el email
+          const emailValue = data.email instanceof File ? '' : (data.email as string).trim();
+          if (formData && emailValue && !/\S+@\S+\.\S+/.test(emailValue)) {
+            const emailError = document.getElementById('email_error');
+            if (emailError) {
+                emailError.textContent = 'Email inválido';
+                emailError.classList.remove('hidden');
+            }
+            hasError = true;
+          }
 
         // Validación adicional para la edad
-        if (data.age && (isNaN(data.age) || Number(data.age) <= 0)) {
-          const ageError = document.getElementById('age_error');
-          ageError.textContent = 'Edad inválida';
-          ageError.classList.remove('hidden');
+        const ageValue = parseInt(data.age as string, 10);
+        const ageError = document.getElementById('age_error');
+        if (isNaN(ageValue) || ageValue <= 0) {
+          if (ageError) {
+            ageError.textContent = 'Edad inválida';
+            ageError.classList.remove('hidden');
+          }
           hasError = true;
         }
 
         // Validación adicional para la contraseña
-        if (data.password && data.password.length < 6) {
+        const passwordValue = data.password instanceof File ? '' : (data.password as string);
+        if (passwordValue && passwordValue.length < 6) {
           const passwordError = document.getElementById('password_error');
-          passwordError.textContent = 'La contraseña debe tener al menos 6 caracteres';
-          passwordError.classList.remove('hidden');
+          if (passwordError) {
+            passwordError.textContent = 'La contraseña debe tener al menos 6 caracteres';
+            passwordError.classList.remove('hidden');
+          }
           hasError = true;
         }
 
         if (hasError) return; // Si hay errores, no enviar el formulario
 
         // Deshabilitar el botón de envío para prevenir múltiples envíos
-        submitButton.disabled = true;
-        submitButton.textContent = 'Enviando...';
+        if (submitButton instanceof HTMLButtonElement) {
+          submitButton.disabled = true;
+          submitButton.textContent = 'Enviando...';
+        }
 
         try {
           const response = await fetch(`/api/v1${path}`, {
@@ -241,5 +255,6 @@ const { path } = Astro.props;
         }
       });
     });
+});
   </script>
 </form>
